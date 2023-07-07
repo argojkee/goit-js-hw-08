@@ -4,6 +4,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryListEl = document.querySelector('.gallery');
+galleryListEl.style.listStyle = 'none';
 
 const markup = galleryItems
   .map(({ preview, original, description }) => {
