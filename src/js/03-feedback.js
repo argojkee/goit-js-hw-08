@@ -14,7 +14,7 @@ formEl.addEventListener('submit', throttle(onSubmitForm, 1000));
 
 function onChangeInput(e) {
   userFeedback[e.target.name] = e.target.value;
-  console.log('ololo');
+
   localStorage.setItem(USER_FEEDBACK_STORAGE, JSON.stringify(userFeedback));
 }
 
