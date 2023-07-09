@@ -1,16 +1,15 @@
 var throttle = require('lodash.throttle');
 
 const formEl = document.querySelector('.feedback-form');
-const emailEl = formEl.querySelector('[name="email"]');
-const messageEl = formEl.querySelector('[name="message');
+const textFormElements = formEl.querySelectorAll('[name]');
 
 const USER_FEEDBACK_STORAGE = 'feedback-form-state';
 let userFeedback = {};
 
 checkedLocalStorage();
 
-formEl.addEventListener('input', throttle(onChangeInput, 1000));
-formEl.addEventListener('submit', throttle(onSubmitForm, 1000));
+formEl.addEventListener('input', throttle(onChangeInput, 500));
+formEl.addEventListener('submit', onSubmitForm);
 
 function onChangeInput(e) {
   userFeedback[e.target.name] = e.target.value;
@@ -22,13 +21,24 @@ function checkedLocalStorage() {
   if (localStorage.getItem(USER_FEEDBACK_STORAGE)) {
     userFeedback = JSON.parse(localStorage.getItem(USER_FEEDBACK_STORAGE));
 
-    emailEl.value = userFeedback.email;
-    messageEl.value = userFeedback.message;
+    for (const element of textFormElements) {
+      if (userFeedback[element.name]) {
+        element.value = userFeedback[element.name];
+      }
+    }
   }
 }
 
 function onSubmitForm(e) {
   e.preventDefault();
+
+  for (const element of textFormElements) {
+    if (element.value.trim() === '') {
+      alert('Please, fill in all fields');
+      return;
+    }
+  }
+
   formEl.reset();
   localStorage.removeItem(USER_FEEDBACK_STORAGE);
 
