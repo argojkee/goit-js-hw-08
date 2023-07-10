@@ -21,11 +21,11 @@ function checkedLocalStorage() {
   if (localStorage.getItem(USER_FEEDBACK_STORAGE)) {
     userFeedback = JSON.parse(localStorage.getItem(USER_FEEDBACK_STORAGE));
 
-    for (const element of textFormElements) {
+    textFormElements.forEach(element => {
       if (userFeedback[element.name]) {
         element.value = userFeedback[element.name];
       }
-    }
+    });
   }
 }
 
@@ -38,9 +38,8 @@ function onSubmitForm(e) {
       return;
     }
   }
-
+  console.log(userFeedback);
   formEl.reset();
   localStorage.removeItem(USER_FEEDBACK_STORAGE);
-
-  console.log(userFeedback);
+  userFeedback = {};
 }
